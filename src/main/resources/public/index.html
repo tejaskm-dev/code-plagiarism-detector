@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic Integrity Engine</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================================ SIDEBAR -->
+<nav class="sidebar" aria-label="Sections">
+  <div class="brand">
+    <span class="logo" data-icon="shield" data-size="22"></span>
+    <div>
+      <h1>IntegrityEngine</h1>
+      <p class="t-label muted">Instructor Portal</p>
+    </div>
+  </div>
+
+  <button class="btn btn-tonal" id="new-analysis" style="margin-bottom:var(--lg)">
+    <span data-icon="plus" data-size="18"></span> New Analysis
+  </button>
+
+  <div class="nav-list" id="nav">
+    <button class="nav-item" data-view="overview" aria-current="page">
+      <span data-icon="dashboard" data-size="20"></span> Overview
+    </button>
+    <button class="nav-item" data-view="submissions">
+      <span data-icon="description" data-size="20"></span> Submissions
+      <span class="tally" id="tally-submissions" hidden>0</span>
+    </button>
+    <button class="nav-item" data-view="pairs" disabled>
+      <span data-icon="compare" data-size="20"></span> Pairs
+      <span class="tally" id="tally-pairs" hidden>0</span>
+    </button>
+    <button class="nav-item" data-view="compare" disabled>
+      <span data-icon="code" data-size="20"></span> Compare
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="row" style="padding:var(--xs) var(--sm)">
+      <span class="chip chip-neutral" id="offline-badge">self-contained</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================================================== WORKSPACE -->
+<div class="workspace">
+  <header class="topbar">
+    <div class="context grow" id="context">
+      <div class="name" id="context-name">No assignment open</div>
+      <div class="t-label muted" id="context-meta">Create one to begin</div>
+    </div>
+    <div class="row">
+      <button class="btn" id="switch-assignment">
+        <span data-icon="history" data-size="18"></span> Assignments
+      </button>
+      <button class="btn btn-primary" id="run-check" disabled>
+        <span data-icon="play" data-size="18"></span> Run Analysis
+      </button>
+    </div>
+  </header>
+
+  <main class="canvas">
+
+    <!-- ======================================================= OVERVIEW -->
+    <section id="view-overview" class="view active">
+      <div id="overview-content"></div>
+    </section>
+
+    <!-- ==================================================== SUBMISSIONS -->
+    <section id="view-submissions" class="view">
+      <div class="page-head">
+        <h2 class="t-headline-sm" style="color:var(--primary)">Submissions</h2>
+        <p class="t-body muted" id="submissions-subtitle">Upload and manage the batch for this assignment.</p>
+      </div>
+
+      <div id="submissions-issues"></div>
+
+      <div class="card" id="start-card">
+        <div class="card-head"><h3 class="t-title-sm">Start a review</h3></div>
+        <div class="card-body">
+          <div class="stack">
+            <div class="row wrap">
+              <input class="grow" id="assignment-name" type="text" autocomplete="off"
+                     placeholder="Assignment name, e.g. CS101 Homework 3" aria-label="Assignment name">
+              <button class="btn btn-primary" id="create-assignment">Create</button>
+            </div>
+            <p class="t-body muted">
+              An assignment is one batch compared against itself. Keep separate assignments
+              separate &mdash; every score is judged relative to the cohort it sits in.
+            </p>
+            <div id="recent-wrap" hidden>
+              <h4 class="t-label upper muted" style="margin:var(--sm) 0 var(--xs)">Or reopen</h4>
+              <div id="recent-list" class="stack"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="upload-card" hidden style="margin-top:var(--lg)">
+        <div class="card-body">
+          <div class="dropzone" id="dropzone" tabindex="0" role="button"
+               aria-label="Drop files here or press Enter to browse">
+            <span class="ring" data-icon="upload" data-size="30"></span>
+            <h3 class="t-title-sm">Drag &amp; drop files here</h3>
+            <p class="t-body muted" style="max-width:52ch;margin-top:var(--base)">
+              Individual source files or a <strong>.zip</strong> archive.
+              A zip with one folder per student attributes work automatically &mdash; the
+              folder name becomes the student identifier.
+            </p>
+            <p class="t-label muted" style="margin:var(--sm) 0">OR</p>
+            <button class="btn" id="browse" type="button">Browse Files</button>
+            <p class="t-label subtle" style="margin-top:var(--sm)">.java .py .c .cpp .js &middot; max 2&nbsp;MB per file</p>
+          </div>
+          <input id="file-input" type="file" multiple hidden>
+          <div id="upload-feedback" style="margin-top:var(--md)"></div>
+        </div>
+      </div>
+
+      <div class="card" id="roster-card" hidden style="margin-top:var(--lg)">
+        <div class="card-head">
+          <div class="row">
+            <h3 class="t-title-sm">Batch</h3>
+            <span class="chip chip-neutral" id="roster-count">0</span>
+          </div>
+          <div class="row">
+            <input id="roster-filter" type="search" placeholder="Filter&hellip;"
+                   aria-label="Filter submissions" style="width:190px">
+            <button class="btn btn-primary" id="analyze">Analyse batch</button>
+          </div>
+        </div>
+        <div class="card-body flush">
+          <div class="table-scroll">
+            <table id="roster-table">
+              <thead><tr>
+                <th class="sortable" data-sort="student">Student <span class="caret">&#8645;</span></th>
+                <th class="sortable" data-sort="filename">Filename <span class="caret">&#8645;</span></th>
+                <th class="sortable" data-sort="language">Language <span class="caret">&#8645;</span></th>
+                <th class="sortable num" data-sort="lineCount">Lines <span class="caret">&#8645;</span></th>
+                <th>Identity</th>
+                <th class="num">Actions</th>
+              </tr></thead>
+              <tbody id="roster-body"></tbody>
+            </table>
+          </div>
+          <div id="roster-empty"></div>
+        </div>
+      </div>
+
+      <div class="card" id="boilerplate-card" hidden style="margin-top:var(--lg)">
+        <div class="card-head">
+          <div class="row">
+            <h3 class="t-title-sm">Boilerplate reference</h3>
+            <span class="chip chip-neutral">optional</span>
+          </div>
+          <button class="btn" id="boilerplate-browse">Add reference files&hellip;</button>
+        </div>
+        <div class="card-body">
+          <p class="t-body muted">
+            Starter or skeleton files issued to every student. Stored against this assignment
+            now; suppression currently infers shared structure from the cohort itself, so these
+            do not yet affect scores.
+          </p>
+          <input id="boilerplate-input" type="file" multiple hidden>
+          <div id="boilerplate-feedback" style="margin-top:var(--sm)"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================= FINDINGS -->
+    <section id="view-pairs" class="view">
+      <div class="page-head">
+        <h2 class="t-headline-sm" style="color:var(--primary)">Findings</h2>
+        <p class="t-body muted" id="pairs-subtitle"></p>
+      </div>
+      <div id="pairs-cohort"></div>
+
+      <!-- Same evidence, three levels of abstraction. The engine compares pairs;
+           a marker thinks in groups and students, so let them choose. -->
+      <div class="lens" role="tablist" aria-label="How to view the findings">
+        <button class="lens-tab" data-lens="groups" role="tab" aria-selected="true">
+          Groups <span class="lens-count" id="lens-count-groups">0</span>
+        </button>
+        <button class="lens-tab" data-lens="students" role="tab" aria-selected="false">
+          Students <span class="lens-count" id="lens-count-students">0</span>
+        </button>
+        <button class="lens-tab" data-lens="pairs" role="tab" aria-selected="false">
+          Every comparison <span class="lens-count" id="lens-count-pairs">0</span>
+        </button>
+      </div>
+      <div id="lens-body"></div>
+    </section>
+
+    <!-- ======================================================== COMPARE -->
+    <section id="view-compare" class="view">
+      <div id="compare-content"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="vendor/chart.min.js"></script>
+<script src="charts.js"></script>
+<script src="icons.js"></script>
+<script src="explain.js"></script>
+<script src="pacing.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
