@@ -1,0 +1,258 @@
+{
+  "a1-constrained": {
+    "files": [
+      {
+        "path": "dc_hana.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "dc_ivan.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_dana.java"
+      },
+      {
+        "path": "ih_alice.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_ben.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_chen.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_dana.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_evan.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_farah.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "oc_gus.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "sb_jia.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_kwan.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_liam.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      }
+    ]
+  },
+  "a2-medium": {
+    "files": [
+      {
+        "path": "dc_hana.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "dc_ivan.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_chen.java"
+      },
+      {
+        "path": "ih_alice.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_ben.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_chen.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_dana.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_evan.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_farah.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "oc_gus.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "sb_jia.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_kwan.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_liam.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      }
+    ]
+  },
+  "a3-open-ended": {
+    "files": [
+      {
+        "path": "dc_hana.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "dc_ivan.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_dana.java"
+      },
+      {
+        "path": "ih_alice.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_ben.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_chen.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_dana.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_evan.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_farah.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "oc_gus.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "sb_jia.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_kwan.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_liam.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      }
+    ]
+  },
+  "a0-degenerate": {
+    "files": [
+      {
+        "path": "dc_hana.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "dc_ivan.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "ih_dana.java"
+      },
+      {
+        "path": "ih_alice.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_ben.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_chen.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_dana.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_evan.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "ih_farah.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "oc_gus.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "ih_alice.java"
+      },
+      {
+        "path": "sb_jia.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_kwan.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "sb_liam.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      }
+    ]
+  }
+}
