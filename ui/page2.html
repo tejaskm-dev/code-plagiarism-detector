@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Similarity Pairs - Academic Integrity Engine</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Manrope:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f9f9f8",
+                        "surface-dim": "#d9dad9",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c4e8fa",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191c1c",
+                        "surface-bright": "#f9f9f8",
+                        "inverse-on-surface": "#f0f1f0",
+                        "on-tertiary-container": "#87aabb",
+                        "on-primary-container": "#96a9ab",
+                        "primary-container": "#2d3e40",
+                        "outline": "#727879",
+                        "on-surface-variant": "#424848",
+                        "primary-fixed-dim": "#b7cacc",
+                        "tertiary-fixed-dim": "#a8ccdd",
+                        "surface-container": "#edeeed",
+                        "tertiary": "#002936",
+                        "on-tertiary-fixed": "#001f29",
+                        "outline-variant": "#c2c7c8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#506164",
+                        "inverse-primary": "#b7cacc",
+                        "primary": "#17282a",
+                        "secondary-container": "#c8e7d8",
+                        "background": "#f9f9f8",
+                        "on-secondary-fixed-variant": "#314c42",
+                        "primary-fixed": "#d3e6e8",
+                        "tertiary-container": "#1a3f4d",
+                        "secondary-fixed-dim": "#afcdbf",
+                        "inverse-surface": "#2e3131",
+                        "on-primary-fixed": "#0d1e20",
+                        "on-secondary-fixed": "#042017",
+                        "surface-container-low": "#f3f4f3",
+                        "surface-container-high": "#e7e8e7",
+                        "surface-variant": "#e1e3e2",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#394a4c",
+                        "on-primary": "#ffffff",
+                        "secondary": "#496459",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#cbe9db",
+                        "on-secondary-container": "#4d685d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#284b5a",
+                        "surface-container-highest": "#e1e3e2",
+                        "on-background": "#191c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "container-margin": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Manrope"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    },
+                    "boxShadow": {
+                        "level-1": "0px 4px 20px rgba(45, 62, 64, 0.05)",
+                        "level-2": "0px 8px 32px rgba(45, 62, 64, 0.12)"
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex">
+    <!-- SideNavBar -->
+    <nav
+        class="bg-surface dark:bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col h-full py-lg px-md z-50">
+        <div class="mb-xl">
+            <h1 class="text-title-lg font-display-lg font-bold text-primary dark:text-primary-fixed-dim">IntegrityEngine
+            </h1>
+            <p class="text-body-md font-body-md text-on-surface-variant">Instructor Portal</p>
+        </div>
+        <button
+            class="bg-primary-container text-on-primary-container rounded-lg py-sm px-md flex items-center justify-center gap-xs font-semibold hover:opacity-90 transition-opacity mb-lg">
+            <span class="material-symbols-outlined icon-fill">add</span>
+            New Analysis
+        </button>
+        <ul class="flex flex-col gap-xs flex-1">
+            <li>
+                <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                    href="#">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="text-label-md font-label-md">Overview</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                    href="#">
+                    <span class="material-symbols-outlined">description</span>
+                    <span class="text-label-md font-label-md">Submissions</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-md py-sm px-md bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-semibold transition-colors duration-200"
+                    href="#">
+                    <span class="material-symbols-outlined icon-fill">compare_arrows</span>
+                    <span class="text-label-md font-label-md">Pairs</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                    href="#">
+                    <span class="material-symbols-outlined">school</span>
+                    <span class="text-label-md font-label-md">Students</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                    href="#">
+                    <span class="material-symbols-outlined">analytics</span>
+                    <span class="text-label-md font-label-md">Reports</span>
+                </a>
+            </li>
+        </ul>
+        <div class="mt-auto border-t border-outline-variant pt-md">
+            <ul class="flex flex-col gap-xs">
+                <li>
+                    <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                        href="#">
+                        <span class="material-symbols-outlined">help</span>
+                        <span class="text-label-md font-label-md">Help Center</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="flex items-center gap-md py-sm px-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200"
+                        href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <span class="text-label-md font-label-md">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Main Content Area -->
+    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+        <!-- TopAppBar -->
+        <header
+            class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md fixed top-0 right-0 left-64 h-16 z-40 border-b border-outline-variant dark:border-outline flex justify-between items-center px-lg w-full">
+            <div class="flex items-center gap-md w-1/3">
+                <div class="relative w-full max-w-md group">
+                    <span
+                        class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-xs pl-xl pr-md text-body-md focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
+                        placeholder="Search students, submissions..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-md">
+                <button class="p-xs text-on-surface-variant hover:text-primary transition-colors relative group">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+                </button>
+                <button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">history</span>
+                </button>
+                <button
+                    class="bg-primary-container text-on-primary-container px-md py-xs rounded-lg font-semibold hover:opacity-90 ml-sm">
+                    Run Check
+                </button>
+                <div
+                    class="ml-sm h-8 w-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant cursor-pointer">
+                    <img alt="Instructor Avatar" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE8hoiKqGgGfbuZOPSkArra5kSq5MpLjGvM1-4-N0OD68IIQmhRt5srChLS6Qp-51gyC9iVETk0pkHBMVUdweUIdi2TdSoCiI9pHuGeLgzv3dbf5gt0mAqyH05aEoFbJVEhjfezrkYLD3FkeKHbe9mAqgZ4303H13z2GrSEQSCwV4y9ND2QgvXSyBxq1PbWHdrd9owTfCqiOzm1fFAwXO9KOy3tacClieXdw2dX_pfkLF5VGM9rUpD" />
+                </div>
+            </div>
+        </header>
+        <!-- Page Content -->
+        <main class="flex-1 mt-16 p-lg bg-surface">
+            <!-- Header Section -->
+            <div class="flex justify-between items-end mb-lg">
+                <div>
+                    <h2 class="text-headline-lg font-headline-lg text-primary mb-base">Similarity Pairs</h2>
+                    <p class="text-body-lg text-on-surface-variant">Review highly correlated student submissions from
+                        Assignment 3.</p>
+                </div>
+                <div class="flex gap-sm">
+                    <div class="relative">
+                        <select
+                            class="appearance-none bg-surface-container-lowest border border-outline-variant text-body-md rounded-lg py-sm pl-md pr-xl focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 cursor-pointer">
+                            <option>All Scores</option>
+                            <option>&gt; 90% Match</option>
+                            <option>&gt; 75% Match</option>
+                            <option>&gt; 50% Match</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                    </div>
+                    <div class="relative">
+                        <select
+                            class="appearance-none bg-surface-container-lowest border border-outline-variant text-body-md rounded-lg py-sm pl-md pr-xl focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 cursor-pointer">
+                            <option>All Statuses</option>
+                            <option>Flagged</option>
+                            <option>In Review</option>
+                            <option>Cleared</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                    </div>
+                    <button
+                        class="bg-surface-container-lowest border border-outline-variant text-on-surface py-sm px-md rounded-lg flex items-center gap-xs hover:bg-surface-container-low transition-colors">
+                        <span class="material-symbols-outlined text-sm">download</span>
+                        Export
+                    </button>
+                </div>
+            </div>
+            <!-- Data Table Card -->
+            <div
+                class="bg-surface-container-lowest rounded-xl shadow-level-1 border border-outline-variant/50 overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-surface-variant bg-surface-container-lowest">
+                            <th class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium">
+                                Student Pair</th>
+                            <th class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium">
+                                Similarity Score</th>
+                            <th class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium">
+                                Shared Lines</th>
+                            <th class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium">
+                                Status</th>
+                            <th class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium">
+                                Analysis Date</th>
+                            <th
+                                class="py-sm px-md text-label-md font-label-md text-on-surface-variant font-medium text-right">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-body-md">
+                        <!-- Row 1 (Critical) -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low/50 transition-colors group">
+                            <td class="py-md px-md">
+                                <div class="flex items-center gap-md">
+                                    <div class="flex -space-x-2">
+                                        <img alt="Student A"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-10"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi_Jkv9C2g4I-1kt9cyGBLdHpgqCeBTv-CtRm_5eu812Cr9YyzN9L-CwQwdeq0oeAKEzzdS-PlFqahBD1NJSt4O4kTXaAjkfMrOn8Eai95oPV_p1J35i7NzVu5n7mqle37lrfU0LAH-ESQfX67S35hOSnguL_dZBmp7OSPfL26QkHfwNf7yLmQ6XC6qhEKZcZNq9ApK5WV8zoi2QGeQce6eRK9COuguInJhQuGJm_InY8_LKdLY0NR" />
+                                        <img alt="Student B"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-0"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0kxUDItH5j9ScSv2d0dSPlwfspHgXD0uiu4wjtKuqtxndrUirxz_xudOX_x6NnzFK4ZOB-nxGPSkXEptCenzMobEYnQrIR2kn9T498BozsR2O_h5Uk9wcLql82EdQzkF6cfJBr_T5FRtkaEHehb5tpk4KU_FaSzkMvndvILJ7CQQYFETXUaoqp9PP6wN6EQTtAmAs4-hPGqVFdwAGFcUE6Gnb228q1Sh5DmXlI_myqqxiOdKJv4Pt" />
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-on-surface">E. Anderson <span
+                                                class="text-outline mx-1">&amp;</span> J. Smith</div>
+                                        <div class="text-label-md text-on-surface-variant">CS101 - Assignment 3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md w-1/4">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-bold text-error">98.2%</span>
+                                </div>
+                                <div class="w-full bg-surface-variant rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-error h-1.5 rounded-full" style="width: 98.2%"></div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant">
+                                412 lines
+                            </td>
+                            <td class="py-md px-md">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full text-label-md font-label-md bg-error-container text-on-error-container">
+                                    Flagged
+                                </span>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant text-label-md">
+                                Oct 24, 2023
+                            </td>
+                            <td class="py-md px-md text-right">
+                                <button
+                                    class="text-primary hover:text-primary-container font-medium text-sm flex items-center justify-end gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Compare <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 2 (Warning) -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low/50 transition-colors bg-surface-bright group">
+                            <td class="py-md px-md">
+                                <div class="flex items-center gap-md">
+                                    <div class="flex -space-x-2">
+                                        <img alt="Student C"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-10"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuArJPwinQ7PVnymOUomvMVrcn8uTOoWLIdY4AMwVGGU0cSeM5GHPfwZ7Novftkz-W1_9wKIDc4N-Pwb5rRBXNcc-f6YAx_s36Fstkw4QxCjoVnmJg8sxArVn4H18ipsqwP568KZQFWOL2firLIDmgWmEcqR7_zdB5t4xnLIsGJqzSkQaS6428ePFft36xBAXbJRof1zq8EKf07UJiVn6IWgqQkWWX1s_LMZqvS8ivbRVeGxNyxWsXpr" />
+                                        <img alt="Student D"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-0"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrYNgxgPLScWNJ971hYteRh7PIsWDfbZh6YCpTspwxt4q4GCN38761zar7QgYOkKC_xzjvmVc6CzgTsWOOeO4zNj_qv5kWZD69sM7OY41C8fbRkrDhmIlBgNCaYetdSiTAMA3KWLhP0pZKGRKDMbTIY0AP4MEYo8M9HMzlVktdIGc_VNq7n_ovf54Y_LXw591Sfpkfiw1IMJthVuYM5AtA3dGGlmKXXiXhHR_OfEw9bxogOjWUeuoz" />
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-on-surface">M. Chen <span
+                                                class="text-outline mx-1">&amp;</span> L. Gomez</div>
+                                        <div class="text-label-md text-on-surface-variant">CS101 - Assignment 3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md w-1/4">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-bold text-on-surface">84.5%</span>
+                                </div>
+                                <div class="w-full bg-surface-variant rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 84.5%"></div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant">
+                                289 lines
+                            </td>
+                            <td class="py-md px-md">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full text-label-md font-label-md bg-secondary-container text-on-secondary-container">
+                                    In Review
+                                </span>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant text-label-md">
+                                Oct 24, 2023
+                            </td>
+                            <td class="py-md px-md text-right">
+                                <button
+                                    class="text-primary hover:text-primary-container font-medium text-sm flex items-center justify-end gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Compare <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 3 (Moderate) -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low/50 transition-colors group">
+                            <td class="py-md px-md">
+                                <div class="flex items-center gap-md">
+                                    <div class="flex -space-x-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-10 bg-surface-variant flex items-center justify-center text-xs font-bold text-on-surface-variant">
+                                            AK</div>
+                                        <img alt="Student F"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-0"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMFxbzzJAdW2CJkTTxX-qEDZi4YyctLAort4tSfpXnzXg9h7ASGbqtTZcDZg7uIt-p_tvWxFwe52mZvRaUvSUn8LWg1zAUtzY4KeLnBDvjFszz2SXEN236nnuh-zim7zhJq2fhtVFhyWAgdZJ-LmCFozSppxbg8pejS7sehWXqtz1VWraC0CgFWPD66cUiZSOE74b-ZwACSJkbozP4Fdn8DWeOKzPeKkdFuXbRi-YSnMJO4RM-nzBo" />
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-on-surface">A. Kumar <span
+                                                class="text-outline mx-1">&amp;</span> S. Patel</div>
+                                        <div class="text-label-md text-on-surface-variant">CS101 - Assignment 3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md w-1/4">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-bold text-on-surface">62.1%</span>
+                                </div>
+                                <div class="w-full bg-surface-variant rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-outline h-1.5 rounded-full" style="width: 62.1%"></div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant">
+                                156 lines
+                            </td>
+                            <td class="py-md px-md">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full text-label-md font-label-md bg-surface-variant text-on-surface-variant border border-outline-variant">
+                                    Pending
+                                </span>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant text-label-md">
+                                Oct 23, 2023
+                            </td>
+                            <td class="py-md px-md text-right">
+                                <button
+                                    class="text-primary hover:text-primary-container font-medium text-sm flex items-center justify-end gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Compare <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 4 (Cleared) -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low/50 transition-colors bg-surface-bright group">
+                            <td class="py-md px-md">
+                                <div class="flex items-center gap-md">
+                                    <div class="flex -space-x-2">
+                                        <img alt="Student G"
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-10"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzcOZMJ9TWkSE9DOQ6qKNwkSLz06DfMODH0MnDkAH6f-YYsN-oLTB01R-1UF3sPI9k5kQDbVJJ5H5Ik8DlOvGphF_q_qDux-OiaPoL9um_jou0d5Qj9lMjQ-M2dDYf_tsBSe-2Y1xA_50ffurlsafAvUVSm8ulan08rlX7jb9g-dsrKZyjkbL9mZeo-0BFiOHi0wbqiX3kipfBys5e4X9S8Xl60x6JzWZJyL14Thp38Wcss-AJH5Pd" />
+                                        <div
+                                            class="w-8 h-8 rounded-full border-2 border-surface-container-lowest z-0 bg-surface-variant flex items-center justify-center text-xs font-bold text-on-surface-variant">
+                                            BJ</div>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-on-surface">T. Williams <span
+                                                class="text-outline mx-1">&amp;</span> B. Johnson</div>
+                                        <div class="text-label-md text-on-surface-variant">CS101 - Assignment 3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md w-1/4">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-bold text-on-surface-variant">41.8%</span>
+                                </div>
+                                <div class="w-full bg-surface-variant rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-surface-tint h-1.5 rounded-full" style="width: 41.8%"></div>
+                                </div>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant">
+                                89 lines
+                            </td>
+                            <td class="py-md px-md">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full text-label-md font-label-md bg-surface-container-low text-on-surface-variant border border-outline-variant">
+                                    Cleared
+                                </span>
+                            </td>
+                            <td class="py-md px-md text-on-surface-variant text-label-md">
+                                Oct 23, 2023
+                            </td>
+                            <td class="py-md px-md text-right">
+                                <button
+                                    class="text-outline hover:text-primary font-medium text-sm flex items-center justify-end gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                    View <span class="material-symbols-outlined text-sm">visibility</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <div
+                    class="flex items-center justify-between px-md py-sm bg-surface-container-lowest border-t border-surface-variant text-label-md text-on-surface-variant">
+                    <div>Showing 1 to 10 of 42 entries</div>
+                    <div class="flex gap-1">
+                        <button class="p-1 rounded hover:bg-surface-container-low transition-colors disabled:opacity-50"
+                            disabled="">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span>
+                        </button>
+                        <button
+                            class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container font-medium">1</button>
+                        <button class="px-2 py-1 rounded hover:bg-surface-container-low transition-colors">2</button>
+                        <button class="px-2 py-1 rounded hover:bg-surface-container-low transition-colors">3</button>
+                        <span class="px-2 py-1">...</span>
+                        <button class="px-2 py-1 rounded hover:bg-surface-container-low transition-colors">5</button>
+                        <button class="p-1 rounded hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

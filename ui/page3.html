@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Academic Integrity Engine - Submissions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Manrope:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f9f9f8",
+                        "surface-dim": "#d9dad9",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c4e8fa",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191c1c",
+                        "surface-bright": "#f9f9f8",
+                        "inverse-on-surface": "#f0f1f0",
+                        "on-tertiary-container": "#87aabb",
+                        "on-primary-container": "#96a9ab",
+                        "primary-container": "#2d3e40",
+                        "outline": "#727879",
+                        "on-surface-variant": "#424848",
+                        "primary-fixed-dim": "#b7cacc",
+                        "tertiary-fixed-dim": "#a8ccdd",
+                        "surface-container": "#edeeed",
+                        "tertiary": "#002936",
+                        "on-tertiary-fixed": "#001f29",
+                        "outline-variant": "#c2c7c8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#506164",
+                        "inverse-primary": "#b7cacc",
+                        "primary": "#17282a",
+                        "secondary-container": "#c8e7d8",
+                        "background": "#f9f9f8",
+                        "on-secondary-fixed-variant": "#314c42",
+                        "primary-fixed": "#d3e6e8",
+                        "tertiary-container": "#1a3f4d",
+                        "secondary-fixed-dim": "#afcdbf",
+                        "inverse-surface": "#2e3131",
+                        "on-primary-fixed": "#0d1e20",
+                        "on-secondary-fixed": "#042017",
+                        "surface-container-low": "#f3f4f3",
+                        "surface-container-high": "#e7e8e7",
+                        "surface-variant": "#e1e3e2",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#394a4c",
+                        "on-primary": "#ffffff",
+                        "secondary": "#496459",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#cbe9db",
+                        "on-secondary-container": "#4d685d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#284b5a",
+                        "surface-container-highest": "#e1e3e2",
+                        "on-background": "#191c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "container-margin": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Manrope"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    },
+                    "boxShadow": {
+                        "level1": "0px 4px 20px rgba(45, 62, 64, 0.05)",
+                        "level2": "0px 8px 32px rgba(45, 62, 64, 0.12)"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F2F4F2;
+        }
+    </style>
+</head>
+
+<body class="text-on-surface antialiased bg-background">
+    <!-- SideNavBar -->
+    <nav
+        class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface flex flex-col py-lg px-md z-50">
+        <div class="flex items-center gap-sm mb-xl px-sm">
+            <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-on-primary">shield</span>
+            </div>
+            <div>
+                <h1
+                    class="text-title-lg font-display-lg font-bold text-primary dark:text-primary-fixed-dim leading-tight tracking-tight">
+                    IntegrityEngine</h1>
+                <p class="text-label-md font-label-md text-on-surface-variant">Instructor Portal</p>
+            </div>
+        </div>
+        <button
+            class="mb-lg w-full bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary transition-colors duration-200 py-sm px-md rounded-lg flex items-center justify-center gap-xs text-label-md font-label-md">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            New Analysis
+        </button>
+        <div class="flex-1 flex flex-col gap-base">
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                Overview
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-semibold transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]"
+                    style="font-variation-settings: 'FILL' 1;">description</span>
+                Submissions
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">compare_arrows</span>
+                Pairs
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">school</span>
+                Students
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">analytics</span>
+                Reports
+            </a>
+        </div>
+        <div class="mt-auto flex flex-col gap-base pt-md border-t border-outline-variant">
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">help</span>
+                Help Center
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 text-body-md font-body-md"
+                href="#">
+                <span class="material-symbols-outlined text-[20px]">settings</span>
+                Settings
+            </a>
+        </div>
+    </nav>
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 right-0 left-64 h-16 z-40 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant dark:border-outline flex justify-between items-center px-lg">
+        <div class="flex-1 flex items-center">
+            <div class="relative w-96 group">
+                <span
+                    class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-secondary transition-colors">search</span>
+                <input
+                    class="w-full bg-surface-container-lowest border border-outline-variant text-body-md font-body-md py-sm pl-10 pr-sm rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all placeholder:text-outline"
+                    placeholder="Search submissions, students, or IDs..." type="text" />
+            </div>
+        </div>
+        <div class="flex items-center gap-md">
+            <div class="flex items-center gap-xs">
+                <button
+                    class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors group relative">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">history</span>
+                </button>
+            </div>
+            <div class="h-6 w-px bg-outline-variant mx-xs"></div>
+            <button
+                class="bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary transition-colors px-md py-sm rounded-lg text-label-md font-label-md font-semibold">
+                Run Check
+            </button>
+            <div
+                class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden ml-xs">
+                <img alt="Instructor Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx0-BFxafjATxM7jxJ8BoByFJ2rAPof2lP-oqwzGXaLTdbFNSFS20b5JMygDtneIqRWAtRbs055V1_Q61Pf7Sea0PQSWDpPW7lzXxhEUeWSItHGjWd9hf6Mnu_9l9J3uyDzZQwicvBFT2hZJZ2saaj1IfNi-4D9kjDQSuQDNsDjp-RUrk-n_OhIwzu0Q7vU4kb3TksFQpxmUaplL-lmXa0EbqtrVIKIBkHWKmofy_GaiIuzphdpO42" />
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="ml-64 mt-16 p-lg max-w-[1600px] mx-auto flex flex-col gap-lg">
+        <!-- Header Section -->
+        <div class="flex justify-between items-end mb-sm">
+            <div>
+                <h2 class="text-headline-md font-headline-md text-on-surface mb-base">Submissions Management</h2>
+                <p class="text-body-md font-body-md text-on-surface-variant">Upload and manage code submissions for
+                    Course CS101 - Fall 2024</p>
+            </div>
+            <div class="flex gap-sm">
+                <button
+                    class="flex items-center gap-xs px-md py-sm rounded-lg border border-outline-variant text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-colors text-label-md font-label-md">
+                    <span class="material-symbols-outlined text-[18px]">download</span>
+                    Export CSV
+                </button>
+            </div>
+        </div>
+        <!-- Upload Zone Card -->
+        <div class="bg-surface-container-lowest rounded-lg p-lg shadow-level1 border border-outline-variant/50">
+            <div
+                class="border-2 border-dashed border-outline-variant rounded-lg p-xl flex flex-col items-center justify-center text-center hover:border-secondary hover:bg-secondary/5 transition-all cursor-pointer group">
+                <div
+                    class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-md group-hover:bg-secondary-container transition-colors">
+                    <span
+                        class="material-symbols-outlined text-outline text-[32px] group-hover:text-secondary transition-colors">cloud_upload</span>
+                </div>
+                <h3 class="text-title-lg font-title-lg text-on-surface mb-xs">Drag &amp; drop files here</h3>
+                <p class="text-body-md font-body-md text-on-surface-variant mb-md max-w-md">Upload ZIP archives
+                    containing student code submissions. Supported formats: .zip, .rar, .tar.gz (Max 500MB)</p>
+                <div class="flex items-center gap-sm">
+                    <span class="text-label-md font-label-md text-outline">OR</span>
+                </div>
+                <button
+                    class="mt-md bg-secondary text-on-secondary px-md py-sm rounded-lg text-label-md font-label-md hover:bg-secondary/90 transition-colors">
+                    Browse Files
+                </button>
+            </div>
+        </div>
+        <!-- Data Table Card -->
+        <div
+            class="bg-surface-container-lowest rounded-lg shadow-level1 border border-outline-variant/50 flex flex-col flex-1 overflow-hidden">
+            <!-- Table Toolbar -->
+            <div class="p-md border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+                <div class="flex items-center gap-md">
+                    <h3 class="text-title-lg font-title-lg text-on-surface">Recent Uploads</h3>
+                    <span
+                        class="bg-surface-container text-on-surface-variant px-sm py-base rounded-full text-label-md font-label-md">124
+                        Total</span>
+                </div>
+                <div class="flex gap-sm">
+                    <div class="relative">
+                        <select
+                            class="appearance-none bg-surface-container-lowest border border-outline-variant text-body-md font-body-md py-xs pl-sm pr-lg rounded-lg focus:outline-none focus:border-secondary transition-colors">
+                            <option>All Languages</option>
+                            <option>Java</option>
+                            <option>Python</option>
+                            <option>C++</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[20px]">expand_more</span>
+                    </div>
+                    <div class="relative">
+                        <select
+                            class="appearance-none bg-surface-container-lowest border border-outline-variant text-body-md font-body-md py-xs pl-sm pr-lg rounded-lg focus:outline-none focus:border-secondary transition-colors">
+                            <option>All Statuses</option>
+                            <option>Accepted</option>
+                            <option>Needs Review</option>
+                            <option>Processing</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[20px]">expand_more</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr
+                            class="border-b border-surface-variant bg-surface-container-low text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">
+                            <th class="py-sm px-md w-12 text-center">
+                                <input
+                                    class="rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-lowest"
+                                    type="checkbox" />
+                            </th>
+                            <th class="py-sm px-md font-medium">Student Name</th>
+                            <th class="py-sm px-md font-medium">Filename</th>
+                            <th class="py-sm px-md font-medium">Language</th>
+                            <th class="py-sm px-md font-medium">Upload Date</th>
+                            <th class="py-sm px-md font-medium">Status</th>
+                            <th class="py-sm px-md font-medium text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-body-md font-body-md text-on-surface">
+                        <!-- Row 1 -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group h-10">
+                            <td class="py-xs px-md text-center">
+                                <input
+                                    class="rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-lowest"
+                                    type="checkbox" />
+                            </td>
+                            <td class="py-xs px-md">
+                                <div class="flex items-center gap-sm">
+                                    <img alt="Student Avatar" class="w-6 h-6 rounded-full border border-outline-variant"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaeJyfjHuK-QbzYUfIQ57QUhBrvx-BWng4lts9F-DJIdW_W2MPPsTDcTw-7myVPvOlWOhdok6n3fWbNwzgnqCs6zkrlEkDe-wZiuY97Xk43nRXIQFCVXPoI04rab7Z9ThsnTpjj-tEVT9MR_-M7p9ELopVXENVv8CvKTD8oEf_eMoPZ4iNVowL-0JPGxluX5n7-GIeRpgO25TGrDvdvWGGD0oOPJTg4Oy0HkQFh8whlmjARNjZnM91" />
+                                    <span class="font-medium">Alice Smith</span>
+                                </div>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant font-label-md">hw1_asmith.zip</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded text-label-md">
+                                    <span class="w-2 h-2 rounded-full bg-[#b07219]"></span> Java
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant">Oct 24, 14:30</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container text-label-md font-medium border border-secondary/20">
+                                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    Accepted
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-right">
+                                <button
+                                    class="text-outline hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr
+                            class="border-b border-surface-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors group h-10">
+                            <td class="py-xs px-md text-center">
+                                <input
+                                    class="rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-lowest"
+                                    type="checkbox" />
+                            </td>
+                            <td class="py-xs px-md">
+                                <div class="flex items-center gap-sm">
+                                    <img alt="Student Avatar" class="w-6 h-6 rounded-full border border-outline-variant"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjctf7mzFRo3FghUYQBKmWT6iMg2KrTzGi8PE2yKPLO081tvBjsYQomU5h1s83L0SvV9Ztio-bWBYHnFip-ebAIaR0Kj86dpoSNTufrDlxmBgN2yj9plMKgP3n4IIWU0oSLwoB-ZUeI-Gte6y-laQR3anza6DhqJV_B7F37ea_rgqMjTWF8CUB1wIrj_DaDUBvYJYIm2eTWtPpu3Ti1xWVtIRclQ3AhDpQ4mZJUrg1hiolI2a4c_ce" />
+                                    <span class="font-medium">Bob Johnson</span>
+                                </div>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant font-label-md">bjohnson_assignment1.zip</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded text-label-md">
+                                    <span class="w-2 h-2 rounded-full bg-[#3572A5]"></span> Python
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant">Oct 24, 15:15</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-error-container/50 text-on-error-container text-label-md font-medium border border-error/20">
+                                    <span class="material-symbols-outlined text-[14px]">warning</span>
+                                    Needs Review
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-right">
+                                <button
+                                    class="text-outline hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr
+                            class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group h-10">
+                            <td class="py-xs px-md text-center">
+                                <input
+                                    class="rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-lowest"
+                                    type="checkbox" />
+                            </td>
+                            <td class="py-xs px-md">
+                                <div class="flex items-center gap-sm">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold border border-outline-variant">
+                                        CW</div>
+                                    <span class="font-medium">Charlie Williams</span>
+                                </div>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant font-label-md">proj_1_cw.tar.gz</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded text-label-md">
+                                    <span class="w-2 h-2 rounded-full bg-[#f34b7d]"></span> C++
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant">Oct 23, 09:45</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-label-md font-medium border border-outline-variant/50">
+                                    <span class="material-symbols-outlined text-[14px] animate-spin">sync</span>
+                                    Processing
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-right">
+                                <button
+                                    class="text-outline hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Row 4 -->
+                        <tr
+                            class="border-b border-surface-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors group h-10">
+                            <td class="py-xs px-md text-center">
+                                <input
+                                    class="rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-lowest"
+                                    type="checkbox" />
+                            </td>
+                            <td class="py-xs px-md">
+                                <div class="flex items-center gap-sm">
+                                    <img alt="Student Avatar" class="w-6 h-6 rounded-full border border-outline-variant"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdEtK_a5a0T5TNYMU6QfLGyH_Vv-qmMfco0Ifp4ER4ms1oOV9YY56Q6rCPKvTDdy6lw0s6EAOfsCbbPJs5f9WqCTYtzuc44XNPJcUNQQdoOy6OEdIeLQb5ylWieEuaMXk-zEsiN6wthhv9v_PfOy2H1fwVP-Dt-eFKkITaTg4CT30EM1B6qKEpTdxvj4MQQyY0vHx5cF9m8TViP5-9roths9CbxZ9N4JRwAGDGH10o5g0m2YQpZA86" />
+                                    <span class="font-medium">Diana Prince</span>
+                                </div>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant font-label-md">final_sub_dp.zip</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded text-label-md">
+                                    <span class="w-2 h-2 rounded-full bg-[#b07219]"></span> Java
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-on-surface-variant">Oct 23, 08:12</td>
+                            <td class="py-xs px-md">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container text-label-md font-medium border border-secondary/20">
+                                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    Accepted
+                                </span>
+                            </td>
+                            <td class="py-xs px-md text-right">
+                                <button
+                                    class="text-outline hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div
+                class="p-sm border-t border-surface-variant bg-surface-bright flex items-center justify-between text-body-md text-on-surface-variant">
+                <div>Showing 1 to 10 of 124 entries</div>
+                <div class="flex gap-xs">
+                    <button
+                        class="px-sm py-xs border border-outline-variant rounded hover:bg-surface-container-high disabled:opacity-50"
+                        disabled="">Previous</button>
+                    <button
+                        class="px-sm py-xs border border-outline-variant rounded bg-primary-container text-on-primary-container">1</button>
+                    <button
+                        class="px-sm py-xs border border-outline-variant rounded hover:bg-surface-container-high">2</button>
+                    <button
+                        class="px-sm py-xs border border-outline-variant rounded hover:bg-surface-container-high">3</button>
+                    <span class="px-sm py-xs">...</span>
+                    <button
+                        class="px-sm py-xs border border-outline-variant rounded hover:bg-surface-container-high">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

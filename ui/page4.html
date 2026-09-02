@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Academic Integrity Engine - Code Comparison</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Manrope:wght@400;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f9f9f8",
+                        "surface-dim": "#d9dad9",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c4e8fa",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191c1c",
+                        "surface-bright": "#f9f9f8",
+                        "inverse-on-surface": "#f0f1f0",
+                        "on-tertiary-container": "#87aabb",
+                        "on-primary-container": "#96a9ab",
+                        "primary-container": "#2d3e40",
+                        "outline": "#727879",
+                        "on-surface-variant": "#424848",
+                        "primary-fixed-dim": "#b7cacc",
+                        "tertiary-fixed-dim": "#a8ccdd",
+                        "surface-container": "#edeeed",
+                        "tertiary": "#002936",
+                        "on-tertiary-fixed": "#001f29",
+                        "outline-variant": "#c2c7c8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#506164",
+                        "inverse-primary": "#b7cacc",
+                        "primary": "#17282a",
+                        "secondary-container": "#c8e7d8",
+                        "background": "#f9f9f8",
+                        "on-secondary-fixed-variant": "#314c42",
+                        "primary-fixed": "#d3e6e8",
+                        "tertiary-container": "#1a3f4d",
+                        "secondary-fixed-dim": "#afcdbf",
+                        "inverse-surface": "#2e3131",
+                        "on-primary-fixed": "#0d1e20",
+                        "on-secondary-fixed": "#042017",
+                        "surface-container-low": "#f3f4f3",
+                        "surface-container-high": "#e7e8e7",
+                        "surface-variant": "#e1e3e2",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#394a4c",
+                        "on-primary": "#ffffff",
+                        "secondary": "#496459",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#cbe9db",
+                        "on-secondary-container": "#4d685d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#284b5a",
+                        "surface-container-highest": "#e1e3e2",
+                        "on-background": "#191c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "container-margin": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Manrope"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F2F4F2;
+        }
+
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(45, 62, 64, 0.05);
+        }
+
+        .overlay-shadow {
+            box-shadow: 0px 8px 32px rgba(45, 62, 64, 0.12);
+        }
+
+        .code-line {
+            display: flex;
+        }
+
+        .line-num {
+            width: 40px;
+            color: #727879;
+            text-align: right;
+            padding-right: 12px;
+            user-select: none;
+        }
+
+        .line-content {
+            flex-grow: 1;
+            padding-left: 12px;
+            white-space: pre;
+        }
+
+        .highlight-match {
+            background-color: rgba(200, 231, 216, 0.3);
+            border-left: 2px solid #496459;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #d9dad9;
+            border-radius: 4px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #c2c7c8;
+        }
+    </style>
+</head>
+
+<body class="text-on-background font-body-md h-screen overflow-hidden flex">
+    <!-- SideNavBar -->
+    <nav
+        class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface flex flex-col py-lg px-md z-50">
+        <div class="mb-xl px-xs">
+            <h1 class="text-title-lg font-display-lg font-bold text-primary dark:text-primary-fixed-dim tracking-tight">
+                IntegrityEngine</h1>
+            <p class="text-label-md font-label-md text-on-surface-variant mt-1">Instructor Portal</p>
+        </div>
+        <button
+            class="mb-lg w-full bg-primary-container text-on-primary rounded-lg py-sm px-md flex items-center justify-center gap-xs font-semibold hover:bg-primary transition-colors">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+            New Analysis
+        </button>
+        <div class="flex-grow flex flex-col gap-base">
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors duration-200"
+                href="#">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-body-md font-body-md">Overview</span>
+            </a>
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors duration-200"
+                href="#">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-body-md font-body-md">Submissions</span>
+            </a>
+            <a class="flex items-center gap-md px-md py-sm rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-semibold"
+                href="#">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">compare_arrows</span>
+                <span class="text-body-md font-body-md">Pairs</span>
+            </a>
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors duration-200"
+                href="#">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-body-md font-body-md">Students</span>
+            </a>
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors duration-200"
+                href="#">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-body-md font-body-md">Reports</span>
+            </a>
+        </div>
+        <div class="mt-auto flex flex-col gap-base pt-lg border-t border-surface-variant">
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">help</span>
+                <span class="text-body-md font-body-md">Help Center</span>
+            </a>
+            <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-body-md font-body-md">Settings</span>
+            </a>
+            <div class="mt-sm flex items-center gap-sm px-md py-xs">
+                <img alt="Instructor Avatar" class="w-8 h-8 rounded-full border border-outline-variant"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_lPxUHwk_5V_bdaIV23geWPe606dpNCn2JZKZJZeKIqbOul4WzoXPDj0xSXGC1kceZ_AeH5F9MPgXyhKjqlvsHvOApBUBljijGW6tP1Wn0QaC2XZs-y1cTBFpJ7-mzn-zI3OJN6_0xM_Cqn7cFmsQXIpLDv1a-Ma9gv-VoxGx1b9mZqb-ullcHt7iTi8dEGQqdfY0A8d3j8VsnEB47t7UTqticUo3c6kYVzqEJ-Kezzo3Kf_HPZw3" />
+                <div class="flex flex-col">
+                    <span class="text-label-md font-label-md text-on-surface">Prof. Smith</span>
+                    <span class="text-[10px] text-on-surface-variant">CS101</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen relative">
+        <!-- TopAppBar (Modified for Context) -->
+        <header
+            class="fixed top-0 right-0 left-64 h-16 z-40 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant dark:border-outline flex justify-between items-center px-lg">
+            <div class="flex items-center gap-md">
+                <button
+                    class="p-xs text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <div class="flex flex-col">
+                    <h2 class="text-title-lg font-title-lg text-primary">Pair Comparison</h2>
+                    <span class="text-label-md font-label-md text-on-surface-variant">CS101_Assignment_3</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-lg">
+                <div
+                    class="flex items-center gap-sm bg-error-container/30 border border-error/20 px-md py-xs rounded-full">
+                    <span class="material-symbols-outlined text-error text-[18px]">warning</span>
+                    <span class="text-label-md font-label-md text-error font-bold">82% Similarity</span>
+                </div>
+                <div class="flex items-center gap-sm border-r border-outline-variant pr-lg">
+                    <button
+                        class="p-xs text-on-surface-variant hover:bg-surface-container rounded transition-colors disabled:opacity-50">
+                        <span class="material-symbols-outlined text-[20px]">keyboard_arrow_up</span>
+                    </button>
+                    <span class="text-label-md font-label-md">Match 2 of 14</span>
+                    <button class="p-xs text-on-surface-variant hover:bg-surface-container rounded transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">keyboard_arrow_down</span>
+                    </button>
+                </div>
+                <button
+                    class="bg-primary-container text-on-primary px-md py-sm rounded-lg text-label-md font-label-md flex items-center gap-xs hover:bg-primary transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">summarize</span>
+                    Run Check
+                </button>
+            </div>
+        </header>
+        <!-- Canvas -->
+        <div class="mt-16 p-lg flex-1 overflow-hidden flex gap-md">
+            <!-- Left Pane: Source A -->
+            <div
+                class="flex-1 bg-surface-container-lowest rounded-lg card-shadow border border-outline-variant flex flex-col overflow-hidden">
+                <div class="h-12 border-b border-outline-variant bg-surface flex items-center justify-between px-md">
+                    <div class="flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-on-surface-variant text-[18px]">person</span>
+                        <span class="text-label-md font-label-md font-bold">student_a_submission.py</span>
+                    </div>
+                    <div class="flex gap-xs">
+                        <span
+                            class="text-[10px] bg-surface-container px-2 py-1 rounded text-on-surface-variant">Python</span>
+                        <span class="text-[10px] bg-surface-container px-2 py-1 rounded text-on-surface-variant">243
+                            Lines</span>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-y-auto scroll-container font-label-md text-label-md bg-white py-sm">
+                    <div class="code-line">
+                        <div class="line-num">1</div>
+                        <div class="line-content text-on-surface-variant">def calculate_fibonacci(n):</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">2</div>
+                        <div class="line-content text-on-surface-variant"> if n &lt;= 0:</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">3</div>
+                        <div class="line-content text-on-surface-variant"> return 0</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">4</div>
+                        <div class="line-content text-on-surface-variant"> elif n == 1:</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">5</div>
+                        <div class="line-content text-on-surface-variant"> return 1</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">6</div>
+                        <div class="line-content text-on-surface-variant"> else:</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">7</div>
+                        <div class="line-content text-on-surface-variant"> # Recursive call</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">8</div>
+                        <div class="line-content text-on-surface"> result = calculate_fibonacci(n-1) +
+                            calculate_fibonacci(n-2)</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">9</div>
+                        <div class="line-content text-on-surface"> return result</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">10</div>
+                        <div class="line-content text-on-surface-variant"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">11</div>
+                        <div class="line-content text-on-surface-variant">def process_data_list(data):</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">12</div>
+                        <div class="line-content text-on-surface-variant"> cleaned_data = []</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">13</div>
+                        <div class="line-content text-on-surface-variant"> for item in data:</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">14</div>
+                        <div class="line-content text-on-surface"> if item is not None and str(item).strip() != "":
+                        </div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">15</div>
+                        <div class="line-content text-on-surface"> cleaned_data.append(str(item).lower())</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">16</div>
+                        <div class="line-content text-on-surface-variant"> return cleaned_data</div>
+                    </div>
+                    <!-- Add more lines as needed to show scrolling if desired, kept short for brevity -->
+                </div>
+            </div>
+            <!-- Right Pane: Source B -->
+            <div
+                class="flex-1 bg-surface-container-lowest rounded-lg card-shadow border border-outline-variant flex flex-col overflow-hidden">
+                <div class="h-12 border-b border-outline-variant bg-surface flex items-center justify-between px-md">
+                    <div class="flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-on-surface-variant text-[18px]">person</span>
+                        <span class="text-label-md font-label-md font-bold">student_b_final.py</span>
+                    </div>
+                    <div class="flex gap-xs">
+                        <span
+                            class="text-[10px] bg-surface-container px-2 py-1 rounded text-on-surface-variant">Python</span>
+                        <span class="text-[10px] bg-surface-container px-2 py-1 rounded text-on-surface-variant">251
+                            Lines</span>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-y-auto scroll-container font-label-md text-label-md bg-white py-sm">
+                    <div class="code-line">
+                        <div class="line-num">45</div>
+                        <div class="line-content text-on-surface-variant">def get_fib(num):</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">46</div>
+                        <div class="line-content text-on-surface-variant"> if num &lt;= 0: return 0</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">47</div>
+                        <div class="line-content text-on-surface-variant"> if num == 1: return 1</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">48</div>
+                        <div class="line-content text-on-surface"> ans = get_fib(num-1) + get_fib(num-2)</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">49</div>
+                        <div class="line-content text-on-surface"> return ans</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">50</div>
+                        <div class="line-content text-on-surface-variant"></div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">51</div>
+                        <div class="line-content text-on-surface-variant">def clean_input_array(arr):</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">52</div>
+                        <div class="line-content text-on-surface-variant"> result_arr = []</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">53</div>
+                        <div class="line-content text-on-surface-variant"> for x in arr:</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">54</div>
+                        <div class="line-content text-on-surface"> if x is not None and str(x).strip() != "":</div>
+                    </div>
+                    <div class="code-line highlight-match">
+                        <div class="line-num">55</div>
+                        <div class="line-content text-on-surface"> result_arr.append(str(x).lower())</div>
+                    </div>
+                    <div class="code-line">
+                        <div class="line-num">56</div>
+                        <div class="line-content text-on-surface-variant"> return result_arr</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
