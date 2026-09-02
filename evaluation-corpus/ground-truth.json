@@ -1,0 +1,269 @@
+{
+  "java": {
+    "files": [
+      {
+        "path": "disguised-copy/dc_gus.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_alice.java"
+      },
+      {
+        "path": "disguised-copy/dc_hana.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_ben.java"
+      },
+      {
+        "path": "disguised-copy/dc_ivan.java",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_dana.java"
+      },
+      {
+        "path": "independent-honest/ih_alice.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_ben.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_chen.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_dana.java",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "obvious-copy/oc_evan.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_alice.java"
+      },
+      {
+        "path": "obvious-copy/oc_farah.java",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_chen.java"
+      },
+      {
+        "path": "shared-boilerplate/sb_jia.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_kwan.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_liam.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_maya.java",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_nina.java",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_omar.java",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_pia.java",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_quinn.java",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      }
+    ]
+  },
+  "python": {
+    "files": [
+      {
+        "path": "disguised-copy/dc_gus.py",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_alice.py"
+      },
+      {
+        "path": "disguised-copy/dc_hana.py",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_dana.py"
+      },
+      {
+        "path": "disguised-copy/dc_ivan.py",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_chen.py"
+      },
+      {
+        "path": "independent-honest/ih_alice.py",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_ben.py",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_chen.py",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_dana.py",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "obvious-copy/oc_evan.py",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_alice.py"
+      },
+      {
+        "path": "obvious-copy/oc_farah.py",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_chen.py"
+      },
+      {
+        "path": "shared-boilerplate/sb_jia.py",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_kwan.py",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_liam.py",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_maya.py",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_nina.py",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_omar.py",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_pia.py",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_quinn.py",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      }
+    ]
+  },
+  "c": {
+    "files": [
+      {
+        "path": "disguised-copy/dc_gus.c",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_alice.c"
+      },
+      {
+        "path": "disguised-copy/dc_hana.c",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_ben.c"
+      },
+      {
+        "path": "disguised-copy/dc_ivan.c",
+        "category": "DISGUISED-COPY",
+        "copiedFrom": "independent-honest/ih_dana.c"
+      },
+      {
+        "path": "independent-honest/ih_alice.c",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_ben.c",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_chen.c",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "independent-honest/ih_dana.c",
+        "category": "INDEPENDENT-HONEST",
+        "copiedFrom": null
+      },
+      {
+        "path": "obvious-copy/oc_evan.c",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_alice.c"
+      },
+      {
+        "path": "obvious-copy/oc_farah.c",
+        "category": "OBVIOUS-COPY",
+        "copiedFrom": "independent-honest/ih_chen.c"
+      },
+      {
+        "path": "shared-boilerplate/sb_jia.c",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_kwan.c",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_liam.c",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "shared-boilerplate/sb_maya.c",
+        "category": "SHARED-BOILERPLATE",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_nina.c",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_omar.c",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_pia.c",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      },
+      {
+        "path": "trivial-assignment/ta_quinn.c",
+        "category": "TRIVIAL-ASSIGNMENT",
+        "copiedFrom": null
+      }
+    ]
+  }
+}
