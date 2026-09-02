@@ -6,3 +6,5 @@ target/
 *.db
 __pycache__/
 *.pyc
+dependency-reduced-pom.xml
+evaluation-results/
