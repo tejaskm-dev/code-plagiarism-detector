@@ -1,0 +1,8 @@
+target/
+*.class
+.idea/
+*.iml
+.DS_Store
+*.db
+__pycache__/
+*.pyc

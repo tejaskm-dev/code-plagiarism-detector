@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# Starts the web UI + REST API on http://localhost:7070
+#
+#   ./bin/integrity-server [--port N] [--db path]
+#
+# The CLI (bin/integrity) is unaffected and remains the entry point for scripted use.
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+JAR="$ROOT/target/integrity-engine.jar"
+
+# Reuse the CLI launcher's JDK discovery by asking it to print nothing and inspecting
+# the same locations; kept in step with bin/integrity deliberately.
+major_version() {
+    _v=$("$1" -XshowSettings:properties -version 2>&1 \
+        | awk -F'= *' '/java\.specification\.version/ { print $2; exit }') || return 1
+    case "$_v" in "") return 1 ;; 1.*) echo "${_v#1.}" ;; *) echo "$_v" ;; esac
+}
+usable() {
+    [ -x "$1" ] || return 1
+    _m=$(major_version "$1" 2>/dev/null) || return 1
+    [ -n "$_m" ] && [ "$_m" -ge 17 ] 2>/dev/null
+}
+find_java() {
+    if [ -n "${JAVA_HOME:-}" ] && usable "$JAVA_HOME/bin/java"; then echo "$JAVA_HOME/bin/java"; return 0; fi
+    if [ -x /usr/libexec/java_home ]; then
+        _h=$(/usr/libexec/java_home -v 17+ 2>/dev/null || true)
+        if [ -n "$_h" ] && usable "$_h/bin/java"; then echo "$_h/bin/java"; return 0; fi
+    fi
+    for _b in /opt/homebrew/opt /usr/local/opt; do
+        for _f in openjdk openjdk@25 openjdk@23 openjdk@21 openjdk@17; do
+            if usable "$_b/$_f/libexec/openjdk.jdk/Contents/Home/bin/java"; then
+                echo "$_b/$_f/libexec/openjdk.jdk/Contents/Home/bin/java"; return 0; fi
+        done
+    done
+    for _c in /opt/homebrew/Cellar/openjdk/*/libexec/openjdk.jdk/Contents/Home/bin/java; do
+        if usable "$_c"; then echo "$_c"; return 0; fi
+    done
+    if command -v java >/dev/null 2>&1 && usable "$(command -v java)"; then command -v java; return 0; fi
+    return 1
+}
+
+if ! JAVA=$(find_java); then
+    echo "error: no Java 17 or newer runtime found. Install one or set JAVA_HOME." >&2
+    exit 1
+fi
+if [ ! -f "$JAR" ]; then
+    echo "error: $JAR not found. Build it with:  mvn package -DskipTests" >&2
+    exit 1
+fi
+
+NATIVE=""
+if "$JAVA" --enable-native-access=ALL-UNNAMED -version >/dev/null 2>&1; then
+    NATIVE="--enable-native-access=ALL-UNNAMED"
+fi
+
+# shellcheck disable=SC2086
+exec "$JAVA" $NATIVE -cp "$JAR" com.integrityengine.api.ServerMain "$@"

@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# Launcher for the academic integrity engine.
+#
+# More defensive than it looks, for two reasons found the hard way on macOS:
+#   * "java" on the PATH is often /usr/bin/java, a stub that reports "Unable to
+#     locate a Java Runtime" even when a JDK is installed;
+#   * "/usr/libexec/java_home -v 17+" happily returns a Java 8 applet plugin,
+#     ignoring the version filter it was given.
+# So every candidate is version-checked by actually running it.
+
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+JAR="$ROOT/target/integrity-engine.jar"
+
+# Prints the major version (8, 17, 21, ...) of the given java binary, or nothing.
+major_version() {
+    _v=$("$1" -XshowSettings:properties -version 2>&1 \
+        | awk -F'= *' '/java\.specification\.version/ { print $2; exit }') || return 1
+    case "$_v" in
+        "")    return 1 ;;
+        1.*)   echo "${_v#1.}" ;;   # 1.8 -> 8
+        *)     echo "$_v" ;;
+    esac
+}
+
+usable() {
+    [ -x "$1" ] || return 1
+    _major=$(major_version "$1" 2>/dev/null) || return 1
+    [ -n "$_major" ] || return 1
+    [ "$_major" -ge 17 ] 2>/dev/null || return 1
+    return 0
+}
+
+find_java() {
+    if [ -n "${JAVA_HOME:-}" ] && usable "$JAVA_HOME/bin/java"; then
+        echo "$JAVA_HOME/bin/java"; return 0
+    fi
+
+    if [ -x /usr/libexec/java_home ]; then
+        _home=$(/usr/libexec/java_home -v 17+ 2>/dev/null || true)
+        if [ -n "$_home" ] && usable "$_home/bin/java"; then
+            echo "$_home/bin/java"; return 0
+        fi
+    fi
+
+    # Homebrew keeps its JDKs keg-only, so they are never on the PATH.
+    for _base in /opt/homebrew/opt /usr/local/opt; do
+        for _formula in openjdk openjdk@25 openjdk@23 openjdk@21 openjdk@17; do
+            _candidate="$_base/$_formula/libexec/openjdk.jdk/Contents/Home/bin/java"
+            if usable "$_candidate"; then echo "$_candidate"; return 0; fi
+        done
+    done
+    for _cellar in /opt/homebrew/Cellar/openjdk/*/libexec/openjdk.jdk/Contents/Home/bin/java; do
+        if usable "$_cellar"; then echo "$_cellar"; return 0; fi
+    done
+
+    if command -v java >/dev/null 2>&1 && usable "$(command -v java)"; then
+        command -v java; return 0
+    fi
+    return 1
+}
+
+if ! JAVA=$(find_java); then
+    echo "error: no Java 17 or newer runtime found." >&2
+    echo "       Install one (e.g. 'brew install openjdk') or set JAVA_HOME." >&2
+    exit 1
+fi
+
+if [ ! -f "$JAR" ]; then
+    echo "error: $JAR not found." >&2
+    echo "       Build it with:  mvn package -DskipTests" >&2
+    exit 1
+fi
+
+# Silences the JDK 24+ warning from sqlite-jdbc loading its native library.
+# Only added when the running JDK understands it; it changes no behaviour.
+NATIVE_FLAG=""
+if "$JAVA" --enable-native-access=ALL-UNNAMED -version >/dev/null 2>&1; then
+    NATIVE_FLAG="--enable-native-access=ALL-UNNAMED"
+fi
+
+# shellcheck disable=SC2086
+exec "$JAVA" $NATIVE_FLAG -jar "$JAR" "$@"
