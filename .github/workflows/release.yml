@@ -16,7 +16,7 @@ jobs:
     env:
       PUBLISH_TO_CENTRAL: ${{ secrets.CENTRAL_USERNAME != '' }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-java@v5
         with:
