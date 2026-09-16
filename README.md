@@ -23,13 +23,13 @@ methods do not hide a copy.
 <dependency>
   <groupId>io.github.tejaskm-dev</groupId>
   <artifactId>integrity-engine-core</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
 **Gradle**
 ```kotlin
-implementation("io.github.tejaskm-dev:integrity-engine-core:0.1.0")
+implementation("io.github.tejaskm-dev:integrity-engine-core:1.0.0")
 ```
 
 > These coordinates resolve once the first release is published to Maven Central. Until then, use
@@ -320,8 +320,18 @@ python3 evaluation-corpus/score.py
 | `evaluation-corpus/` | Labelled benchmark corpus and Python scorers |
 | `docs/` | REST API reference, release guide, evaluation reports, UI mockups |
 
-To release, push a tag such as `v0.1.0`. For the one-time Maven Central setup, see
+To release, set the version in `pom.xml`, then push a matching tag (`v1.0.0`). For details, see
 [docs/RELEASING.md](docs/RELEASING.md).
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) © 2026 Tejas KM, Sufiyan Shiraj, Sumedha K S, Sreya K Nair.
+
+The web dashboard bundles Chart.js (MIT) and the Hanken Grotesk, Manrope and JetBrains Mono
+fonts. The fonts are under the SIL Open Font License 1.1, and their license files are kept
+next to them in `app/src/main/resources/public/fonts/`.
 
 ---
 

@@ -1,6 +1,7 @@
 name: Release
 
-# Push a tag like v0.1.0 to publish. Tags with a suffix (v0.2.0-rc1) become pre-releases.
+# Push a tag matching the version in pom.xml (v1.0.0 for 1.0.0) to publish.
+# Versions with a suffix (1.1.0-rc1) become pre-releases.
 # Maven Central publishing runs only once its secrets are configured; see docs/RELEASING.md.
 on:
   push:
@@ -30,11 +31,18 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
-      - name: Resolve version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Check the tag matches pom.xml
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          project_version=$(mvn -B -q help:evaluate -Dexpression=project.version -DforceStdout)
+          if [[ "$project_version" != "$VERSION" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match version $project_version in pom.xml. Update <revision>, commit, and tag that commit."
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
       - name: Build and test
-        run: mvn -B verify -Drevision="$VERSION"
+        run: mvn -B verify
 
       - name: Stage release files
         run: |
@@ -57,4 +65,4 @@ jobs:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: mvn -B deploy -Prelease -DskipTests -Drevision="$VERSION"
+        run: mvn -B deploy -Prelease -DskipTests

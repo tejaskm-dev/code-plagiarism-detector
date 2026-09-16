@@ -2,4 +2,4 @@
 jdk:
   - openjdk17
 install:
-  - mvn -B install -DskipTests -Drevision="$VERSION"
+  - mvn -B install -DskipTests

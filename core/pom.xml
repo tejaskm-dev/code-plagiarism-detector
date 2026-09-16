@@ -41,6 +41,18 @@
 
   <build>
     <plugins>
+      <!--
+        Publish a self-contained POM: license, developers and SCM inlined, the parent
+        removed and dependency versions resolved, so consumers and Maven Central need
+        nothing beyond this one file.
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <configuration>
+          <flattenMode>ossrh</flattenMode>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>

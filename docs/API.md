@@ -76,7 +76,7 @@ not exist.
 Returns without touching the database. Use it to check the server is up.
 
 ```json
-{"status": "ok", "version": "0.1.0"}
+{"status": "ok", "version": "1.0.0"}
 ```
 
 ### `POST /api/v1/assignments`

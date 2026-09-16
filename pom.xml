@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- The inherit.append.path flags stop Maven from appending each module's name to these URLs. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         child.project.url.inherit.append.path="false">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -11,7 +13,7 @@
   -->
   <groupId>io.github.tejaskm-dev</groupId>
   <artifactId>integrity-engine-parent</artifactId>
-  <!-- CI-friendly version: release builds pass -Drevision=X.Y.Z from the git tag. -->
+  <!-- The version is set once, in the revision property below. -->
   <version>${revision}</version>
   <packaging>pom</packaging>
 
@@ -21,6 +23,14 @@
     winnowing fingerprints, and cohort-relative statistical flagging.
   </description>
   <url>https://github.com/tejaskm-dev/code-plagiarism-detector</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/license/mit</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <developers>
     <developer>
@@ -45,7 +55,9 @@
     </developer>
   </developers>
 
-  <scm>
+  <scm child.scm.connection.inherit.append.path="false"
+       child.scm.developerConnection.inherit.append.path="false"
+       child.scm.url.inherit.append.path="false">
     <url>https://github.com/tejaskm-dev/code-plagiarism-detector</url>
     <connection>scm:git:https://github.com/tejaskm-dev/code-plagiarism-detector.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/tejaskm-dev/code-plagiarism-detector.git</developerConnection>
@@ -57,7 +69,12 @@
   </modules>
 
   <properties>
-    <revision>0.1.0-SNAPSHOT</revision>
+    <!--
+      The release version, following semantic versioning. To release, bump this, commit,
+      and push a matching tag (v1.0.0 for 1.0.0). The release workflow refuses a tag that
+      does not match.
+    -->
+    <revision>1.0.0</revision>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
