@@ -11,8 +11,8 @@
 
 set -eu
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-JAR="$ROOT/target/integrity-engine.jar"
+ROOT=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+JAR="$ROOT/app/target/integrity-engine.jar"
 
 # Prints the major version (8, 17, 21, ...) of the given java binary, or nothing.
 major_version() {

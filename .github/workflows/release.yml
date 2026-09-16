@@ -1,0 +1,60 @@
+name: Release
+
+# Push a tag like v0.1.0 to publish. Tags with a suffix (v0.2.0-rc1) become pre-releases.
+# Maven Central publishing runs only once its secrets are configured; see docs/RELEASING.md.
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      PUBLISH_TO_CENTRAL: ${{ secrets.CENTRAL_USERNAME != '' }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          # Writes a settings.xml server entry and imports the signing key. Both are
+          # inert when the secrets are absent.
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Resolve version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Build and test
+        run: mvn -B verify -Drevision="$VERSION"
+
+      - name: Stage release files
+        run: |
+          mkdir dist
+          cp app/target/integrity-engine.jar "dist/integrity-engine-$VERSION.jar"
+          (cd dist && sha256sum -- *.jar > SHA256SUMS)
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prerelease=()
+          [[ "$VERSION" == *-* ]] && prerelease=(--prerelease)
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --title "$GITHUB_REF_NAME" --generate-notes "${prerelease[@]}"
+
+      - name: Publish library to Maven Central
+        if: env.PUBLISH_TO_CENTRAL == 'true'
+        env:
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: mvn -B deploy -Prelease -DskipTests -Drevision="$VERSION"

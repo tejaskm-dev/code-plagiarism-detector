@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test (JDK ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ['17', '21']
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      # Includes the library's javadoc and sources jars, so a doc error fails CI rather
+      # than a release.
+      - name: Build and run tests
+        run: mvn -B verify
+
+      - name: Smoke-test the CLI against the sample class
+        run: |
+          ./bin/integrity --version
+          ./bin/integrity analyze --quiet --dir examples/cs101-hw3 \
+            --out "$RUNNER_TEMP/report.json" --db "$RUNNER_TEMP/cli.db"
+          grep -q '"flaggedCount"' "$RUNNER_TEMP/report.json"
+
+      - name: Smoke-test the server
+        run: |
+          ./bin/integrity-server --port 7070 --db "$RUNNER_TEMP/server.db" &
+          for _ in $(seq 1 60); do
+            curl -sf http://localhost:7070/api/v1/health && exit 0
+            sleep 1
+          done
+          echo "server did not become healthy" >&2
+          exit 1
+
+      - name: Upload jar
+        if: matrix.java == '21'
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrity-engine-jar
+          path: app/target/integrity-engine.jar
+          if-no-files-found: error

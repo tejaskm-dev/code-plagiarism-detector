@@ -5,14 +5,59 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.integrityengine</groupId>
-  <artifactId>academic-integrity-engine</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <!--
+    io.github.<user> is the namespace Maven Central verifies against a GitHub account.
+    Java package names stay com.integrityengine; the two are independent.
+  -->
+  <groupId>io.github.tejaskm-dev</groupId>
+  <artifactId>integrity-engine-parent</artifactId>
+  <!-- CI-friendly version: release builds pass -Drevision=X.Y.Z from the git tag. -->
+  <version>${revision}</version>
+  <packaging>pom</packaging>
 
-  <name>academic-integrity-engine</name>
+  <name>Integrity Engine (parent)</name>
+  <description>
+    Source-code plagiarism detection for programming assignments: normalising tokenizers,
+    winnowing fingerprints, and cohort-relative statistical flagging.
+  </description>
+  <url>https://github.com/tejaskm-dev/code-plagiarism-detector</url>
+
+  <developers>
+    <developer>
+      <id>tejaskm-dev</id>
+      <name>Tejas KM</name>
+      <url>https://github.com/tejaskm-dev</url>
+    </developer>
+    <developer>
+      <id>Sufiyan-Shiraj</id>
+      <name>Sufiyan Shiraj</name>
+      <url>https://github.com/Sufiyan-Shiraj</url>
+    </developer>
+    <developer>
+      <id>sumedhaks8075</id>
+      <name>Sumedha K S</name>
+      <url>https://github.com/sumedhaks8075</url>
+    </developer>
+    <developer>
+      <id>sreyaknair08</id>
+      <name>Sreya K Nair</name>
+      <url>https://github.com/sreyaknair08</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/tejaskm-dev/code-plagiarism-detector</url>
+    <connection>scm:git:https://github.com/tejaskm-dev/code-plagiarism-detector.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/tejaskm-dev/code-plagiarism-detector.git</developerConnection>
+  </scm>
+
+  <modules>
+    <module>core</module>
+    <module>app</module>
+  </modules>
 
   <properties>
+    <revision>0.1.0-SNAPSHOT</revision>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -31,89 +76,159 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>io.github.tejaskm-dev</groupId>
+        <artifactId>integrity-engine-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.javalin</groupId>
+        <artifactId>javalin</artifactId>
+        <version>${javalin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.xerial</groupId>
+        <artifactId>sqlite-jdbc</artifactId>
+        <version>${sqlite.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
-  <dependencies>
-    <!-- REST layer (api package). Added, not yet used. -->
-    <dependency>
-      <groupId>io.javalin</groupId>
-      <artifactId>javalin</artifactId>
-      <version>${javalin.version}</version>
-    </dependency>
-
-    <!-- Javalin logs through SLF4J; without a binding it warns loudly at startup. -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-
-    <!-- Plain JDBC persistence (persistence package). No ORM by design. -->
-    <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>${sqlite.version}</version>
-    </dependency>
-
-    <!-- Tests -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.5.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.12.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.6.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
+      <!-- Fails fast with a clear message instead of an obscure compiler error. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.2</version>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>enforce-toolchain</id>
+            <goals><goal>enforce</goal></goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion><version>[17,)</version></requireJavaVersion>
+                <requireMavenVersion><version>[3.8,)</version></requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <!--
-        Produces a single self-contained jar so the tool can actually be run.
-        This is a build plugin, not a new dependency: the shaded jar contains exactly
-        the three libraries already declared above and nothing else.
+        Maven 3 installs and deploys POMs with ${revision} left unresolved, which makes a
+        published artifact unresolvable. Flattening substitutes the real version.
       -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.6.0</version>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.8.0</version>
+        <configuration>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          <updatePomFile>true</updatePomFile>
+        </configuration>
         <executions>
           <execution>
-            <phase>package</phase>
-            <goals><goal>shade</goal></goals>
-            <configuration>
-              <finalName>integrity-engine</finalName>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.integrityengine.cli.Main</mainClass>
-                </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-              </transformers>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/*.SF</exclude>
-                    <exclude>META-INF/*.DSA</exclude>
-                    <exclude>META-INF/*.RSA</exclude>
-                    <exclude>module-info.class</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-            </configuration>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals><goal>flatten</goal></goals>
+          </execution>
+          <execution>
+            <id>flatten-clean</id>
+            <phase>clean</phase>
+            <goals><goal>clean</goal></goals>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      Maven Central publishing: mvn deploy -Prelease -Drevision=X.Y.Z
+      Needs a Central Portal token (server id "central") and a GPG signing key. The
+      release workflow supplies both from repository secrets.
+    -->
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals><goal>sign</goal></goals>
+                <configuration>
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.11.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
+              <waitUntil>published</waitUntil>
+              <!-- The application is shipped as a release jar, not as a dependency. -->
+              <excludeArtifacts>
+                <excludeArtifact>integrity-engine-app</excludeArtifact>
+              </excludeArtifacts>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

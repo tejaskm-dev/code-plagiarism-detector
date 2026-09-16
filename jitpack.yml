@@ -1,0 +1,5 @@
+# JitPack builds a tagged commit on first request. It defaults to JDK 8, which cannot build this.
+jdk:
+  - openjdk17
+install:
+  - mvn -B install -DskipTests -Drevision="$VERSION"
