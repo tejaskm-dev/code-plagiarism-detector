@@ -78,10 +78,11 @@ final class StyleFeatures {
 
     /** @return the feature vector in {@link #NAMES} order */
     static double[] extract(String source, ITokenizer tokenizer) {
-        String stripped = tokenizer.withoutComments(source);
-        List<Token> lexical = tokenizer.lexicalTokens(source);
-        List<Token> normalised = tokenizer.tokenize(source);
-        String[] rawLines = source.split("\n", -1);
+        String normalizedSource = source.replace("\r\n", "\n").replace('\r', '\n');
+        String stripped = tokenizer.withoutComments(normalizedSource);
+        List<Token> lexical = tokenizer.lexicalTokens(normalizedSource);
+        List<Token> normalised = tokenizer.tokenize(normalizedSource);
+        String[] rawLines = normalizedSource.split("\n", -1);
 
         List<String> identifiers = new ArrayList<>();
         for (Token token : lexical) {
@@ -102,10 +103,10 @@ final class StyleFeatures {
 
         // ---- comments -----------------------------------------------------------
         List<String> comments = commentLines(rawLines, stripped.split("\n", -1));
-        f[i++] = commentDensity(source, stripped);
+        f[i++] = commentDensity(normalizedSource, stripped);
         f[i++] = docCoverage(rawLines, lexical);
         f[i++] = rate(comments, StyleFeatures::readsAsSentence);
-        f[i++] = clamp(countMatches(source, TODO_MARKER) / Math.max(1.0, rawLines.length / 40.0));
+        f[i++] = clamp(countMatches(normalizedSource, TODO_MARKER) / Math.max(1.0, rawLines.length / 40.0));
         f[i++] = rate(comments, c -> CODE_IN_COMMENT.matcher(c.trim()).matches());
 
         // ---- formatting ---------------------------------------------------------
@@ -124,7 +125,7 @@ final class StyleFeatures {
 
         // ---- residue ------------------------------------------------------------
         f[i++] = magicNumberRate(lexical);
-        f[i++] = clamp(countMatches(source, DEBUG_PRINT) / Math.max(1.0, rawLines.length / 30.0));
+        f[i++] = clamp(countMatches(normalizedSource, DEBUG_PRINT) / Math.max(1.0, rawLines.length / 30.0));
 
         // ---- restatement --------------------------------------------------------
         f[i++] = commentRestatesCode(rawLines, stripped.split("\n", -1));

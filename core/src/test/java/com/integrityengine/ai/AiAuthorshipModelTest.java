@@ -47,6 +47,18 @@ class AiAuthorshipModelTest {
     }
 
     @Test
+    @DisplayName("Scores are identical regardless of CRLF or LF line endings")
+    void lineEndingsDoNotAffectScore() {
+        String lf = generated();
+        String crlf = lf.replace("\n", "\r\n");
+
+        double lfScore = model.score(of("A.java", lf)).orElseThrow();
+        double crlfScore = model.score(of("A.java", crlf)).orElseThrow();
+
+        assertEquals(lfScore, crlfScore, 1e-9, "CRLF and LF line endings must produce identical AI scores");
+    }
+
+    @Test
     @DisplayName("A fresh instance agrees with an existing one -- the forest is shared state")
     void instancesAgree() {
         CodeSubmission submission = of("A.java", handWritten());

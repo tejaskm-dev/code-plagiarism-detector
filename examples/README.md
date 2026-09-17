@@ -5,7 +5,7 @@ class (mean, max, median, count-above) on top of a provided starter. It exists s
 tool can be exercised against data with **known ground truth**.
 
 ```sh
-./bin/integrity analyze --dir examples/cs101-hw3 --out /tmp/report.json --assignment cs101-hw3
+./bin/integrity analyze --dir examples/cs101-hw3 --out report.json --assignment cs101-hw3
 ```
 
 ## Ground truth
