@@ -203,7 +203,7 @@ final class AnalyzeCommand {
                     .toList();
 
             for (Path file : candidates) {
-                String relative = root.relativize(file).toString();
+                String relative = root.relativize(file).toString().replace('\\', '/');
                 String source;
                 try {
                     source = Files.readString(file, StandardCharsets.UTF_8);
