@@ -121,7 +121,7 @@ java -jar integrity-engine-<version>.jar analyze --dir submissions/ --out report
 
 `--dir` expects one folder per student. Writing `--out` to a `.txt` or `.md` file gives a
 readable report instead of JSON. In a clone of this repository, `./bin/integrity` runs the
-same commands.
+same commands on macOS and Linux. On Windows, use `java -jar app\target\integrity-engine.jar`.
 
 | Flag | Argument | Description | Default |
 | :--- | :--- | :--- | :--- |
@@ -152,7 +152,7 @@ Other commands: `serve [--port <n>] [--db <file>]` starts the web dashboard, and
    - Accurately distinguishes natural convergence on short assignments from genuine collusion.
 5. **AI Authorship & Stylometry (BYOK)**:
    - Includes an offline **stylometric random forest** model detecting synthetic patterns (naming uniformity, cyclomatic complexity distributions).
-   - Supports optional BYOK LLM evaluation via `export ANTHROPIC_API_KEY=sk-ant-...`.
+   - Supports optional BYOK LLM evaluation via `export ANTHROPIC_API_KEY=sk-ant-...` (PowerShell: `$env:ANTHROPIC_API_KEY = "sk-ant-..."`).
 
 For measured accuracy on a hand-labelled corpus, see [docs/evaluation-results.md](docs/evaluation-results.md) and
 [docs/ai-detection-results.md](docs/ai-detection-results.md).
@@ -180,6 +180,16 @@ The project requires **Java 17+** and **Maven 3.8+**. Run the command matching y
   ```bash
   sudo dnf install -y java-17-openjdk-devel maven
   ```
+* **Windows**, using [Scoop](https://scoop.sh) (no admin rights needed):
+  ```powershell
+  scoop bucket add java
+  scoop install temurin17-jdk maven
+  ```
+  Or using [Chocolatey](https://chocolatey.org/install), in PowerShell opened with **Run as administrator**:
+  ```powershell
+  choco install -y temurin17 maven
+  ```
+  Then close and reopen the terminal so `java` and `mvn` are on the `PATH`.
 
 Verify the installation:
 ```bash
@@ -192,6 +202,10 @@ mvn -version
 > it anyway. For `mvn`, set `JAVA_HOME`, for example
 > `export JAVA_HOME=$(brew --prefix openjdk@17)/libexec/openjdk.jdk/Contents/Home`. If Maven
 > picks up an older Java, the build fails straight away with a message saying so.
+
+> **Windows note:** the `bin/` launchers are shell scripts for macOS and Linux. On Windows,
+> run the jar directly with `java -jar`, as shown for each step below. The build commands
+> in Step 2 work unchanged in PowerShell.
 
 ### Step 2: Clone and Build
 
@@ -207,6 +221,12 @@ mvn clean package -DskipTests
 
 ```bash
 ./bin/integrity-server --db demo.db
+```
+
+On Windows (PowerShell):
+
+```powershell
+java -jar app\target\integrity-engine.jar serve --db demo.db
 ```
 
 Using a fresh `--db` keeps old test runs off the start screen. The dashboard loads nothing
@@ -240,6 +260,12 @@ authentication and is meant to run on your own machine.
 
 ```bash
 ./bin/integrity analyze --dir examples/cs101-hw3 --out report.txt --assignment cs101-hw3
+```
+
+On Windows (PowerShell):
+
+```powershell
+java -jar app\target\integrity-engine.jar analyze --dir examples\cs101-hw3 --out report.txt --assignment cs101-hw3
 ```
 
 This analyses the 10 submissions, compares all 45 pairs, and prints the report (abridged here):
@@ -294,7 +320,8 @@ mvn verify    # unit and integration tests, plus the library's javadoc and sourc
 ```
 
 The benchmark scores the engine against a hand-labelled corpus in Python, Java and C. It
-reads the engine's output from `evaluation-results/`, so generate that first:
+reads the engine's output from `evaluation-results/`, so generate that first. These commands
+are for macOS and Linux; on Windows, run them inside [WSL](https://learn.microsoft.com/windows/wsl/install).
 
 ```bash
 mkdir -p evaluation-results
