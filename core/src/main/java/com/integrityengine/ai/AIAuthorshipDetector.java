@@ -61,7 +61,7 @@ public final class AIAuthorshipDetector {
      */
     public static final double JUDGE_WEIGHT = 0.65;
     public static final double HEURISTIC_WEIGHT = 0.35;
-
+    @SuppressWarnings("unused")
     private final StylometricExtractor extractor;
     private final AiAuthorshipModel model;
     private final LlmJudge judge;

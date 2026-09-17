@@ -3,7 +3,6 @@ package com.integrityengine.api;
 import static com.integrityengine.api.HttpSupport.field;
 import static com.integrityengine.api.HttpSupport.files;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.javalin.Javalin;

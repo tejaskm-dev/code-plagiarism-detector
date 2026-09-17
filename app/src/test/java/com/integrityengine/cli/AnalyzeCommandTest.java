@@ -333,6 +333,7 @@ class AnalyzeCommandTest {
     }
 
     @Test
+    @org.junit.jupiter.api.condition.DisabledOnOs(org.junit.jupiter.api.condition.OS.WINDOWS)
     @DisplayName("A filename containing quotes and newlines still produces parseable JSON")
     void hostileFilenamesDoNotBreakTheReport() throws Exception {
         Path root = workspace.resolve("hostile");

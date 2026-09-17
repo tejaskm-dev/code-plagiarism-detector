@@ -2,7 +2,6 @@ package com.integrityengine.api;
 
 import com.integrityengine.domain.CodeSubmission;
 import com.integrityengine.domain.Report;
-import com.integrityengine.domain.SimilarityResult;
 import com.integrityengine.engine.IntegrityEngine;
 import com.integrityengine.persistence.RepositoryFactory;
 import com.integrityengine.persistence.SubmissionRepository;
@@ -21,7 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.Optional;
 
 /**

@@ -148,7 +148,6 @@ class SimilarityPipelineIntegrationTest {
         assertTrue(boilerplate.size() > 0, "the shared starter should have been detected");
 
         double honestBefore = jaccard.compare(sets.get(2), sets.get(3));
-        double colludeBefore = jaccard.compare(sets.get(0), sets.get(1));
 
         double honestAfter = jaccard.compare(
                 Pipeline.without(sets.get(2), boilerplate), Pipeline.without(sets.get(3), boilerplate));

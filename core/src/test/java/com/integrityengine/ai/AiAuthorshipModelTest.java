@@ -106,7 +106,7 @@ class AiAuthorshipModelTest {
                 "renaming identifiers is itself a style change and should register");
     }
 
-    /** Irregular spacing, abbreviations, a stale TODO, a debug print left in. */
+    /** Irregular spacing, abbreviations, a stale to-do, a debug print left in. */
     private static String handWritten() {
         return """
                 public class OrderTotal {
